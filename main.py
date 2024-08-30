@@ -6,7 +6,7 @@ from sleeperpy import Avatars
 
 app = Flask(__name__)
 
-draft_id = 1120557302983110657
+draft_id = 1135037103693312000
 
 @app.route('/')
 def index():
