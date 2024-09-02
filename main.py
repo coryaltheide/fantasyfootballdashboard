@@ -1,3 +1,4 @@
+import pandas as pd
 from flask import Flask, render_template, jsonify
 from sleeperpy import User
 from sleeperpy import Drafts
@@ -6,7 +7,17 @@ from sleeperpy import Avatars
 
 app = Flask(__name__)
 
+#real draft:
 draft_id = 1120557302983110657
+
+#mock draft:
+#draft_id = x
+
+csv_file = "astro_df.csv"
+def get_csv_data(player_id):
+    df = pd.read_csv(csv_file)
+    return df[df["sleeper_id"] == player_id][["a", "b", "c", "d", "x", "y", "z"]]
+
 
 @app.route('/')
 def index():
@@ -33,7 +44,15 @@ def get_recent_pick():
         else: #if the user doesn't exist, just for testing league drafts with bots
             owner_name = 'null'
             avatar_id = 'null'
-
+        csv_data = get_csv_data(player_id)
+        if csv_data:
+            sun_sign = csv_data['sun.sign']
+            sun_element = csv_data['sun.element']
+            chart = csv_data['chart']
+        else:
+            sun_sign = 'null'
+            sun_element = 'null'
+            chart = 'null'
         
     else:
         player_name = "No recent pick"
@@ -46,7 +65,11 @@ def get_recent_pick():
         'round' : round,
         'pick_no': pick_no, 
         'owner_name': owner_name,
-        'avatar_id': avatar_id
+        'avatar_id': avatar_id,
+        'player_id': player_id,
+        'sun_sign': sun_sign,
+        'sun_element': sun_element,
+        'chart: chart
     })
 
 if __name__ == '__main__':
