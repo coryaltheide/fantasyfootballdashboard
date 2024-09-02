@@ -4,19 +4,100 @@
     <title>Live Draft Dashboard</title>
     <style>
         /* Add your desired CSS styles here */
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        #recent-pick {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #player-image {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            border-radius: 50%;
+        }
+
+        #pick-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #pick-info table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        #pick-info table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #sun-sign-image {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+
+        #svg-container {
+            width: 100%;
+            height: 300px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Live Draft Dashboard</h1>
     <div id="recent-pick">
-        <h2>Most Recent Pick</h2>
-        <p>Player: <span id="player-name"></span></p>
-        <p>Team: <span id="team-name"></span></p>
-        <p>Round: <span id ="round"></span></p>
-        <p>#: <span id ="pick_no"></span></p>
-        <p>Position: <span id="position"></span></p>
-        <p>Team Owner: <span id="owner_name"></span></p>
+        <div id="player-image-container">
+            <img id="player-image" src="https://url/{{ player_id }}.jpg" alt="Player Image">
+        </div>
+        <div id="pick-info">
+            <table>
+                <tr>
+                    <td>Player:</td>
+                    <td id="player-name"></td>
+                </tr>
+                <tr>
+                    <td>Team:</td>
+                    <td id="team-name"></td>
+                </tr>
+                <tr>
+                    <td>Round:</td>
+                    <td id="round"></td>
+                </tr>
+                <tr>
+                    <td>#:</td>
+                    <td id="pick_no"></td>
+                </tr>
+                <tr>
+                    <td>Position:</td>
+                    <td id="position"></td>
+                </tr>
+                <tr>
+                    <td>Team Owner:</td>
+                    <td id="owner_name"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="sun-sign-container">
+            <img id="sun-sign-image" src="https://url/{{ sun_sign }}.png" alt="Sun Sign Image">
+        </div>
     </div>
+
+    <div id="svg-container">
+        </div>
 
     <script>
         function updateRecentPick() {
@@ -34,7 +115,31 @@
                     document.getElementById('pick_no').textContent = data.pick_no;
                     document.getElementById('owner_name').textContent = data.owner_name;
                     document.getElementById('avatar_id').textContent = data.avatar_id;
+
+                    // Update the player image URL
+                    document.getElementById('player-image').src = `https://url/${data.player_id}.jpg`;
+
+                    // Update the sun sign image URL
+                    document.getElementById('sun-sign-image').src = `/static/${data.sun_sign}.png`;
+
+                    // Update the background color based on sun_element
+                    document.body.style.backgroundColor = getBackgroundColor(data.sun_element);
                 });
+        }
+
+        function getBackgroundColor(sun_element) {
+            switch (sun_element) {
+                case 'fire':
+                    return 'red';
+                case 'earth':
+                    return 'green';
+                case 'air':
+                    return 'white';
+                case 'water':
+                    return 'blue';
+                default:
+                    return 'black';
+            }
         }
 
         // Update the recent pick data every 5 seconds (5000 milliseconds)
