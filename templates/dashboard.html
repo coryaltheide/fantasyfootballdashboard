@@ -61,7 +61,7 @@
     <h1>Live Draft Dashboard</h1>
     <div id="recent-pick">
         <div id="player-image-container">
-            <img id="player-image" src="https://url/{{ player_id }}.jpg" alt="Player Image">
+            <img id="player-image" src="https://sleepercdn.com/content/nfl/players/{{ player_id }}.jpg" alt="Player Image">
         </div>
         <div id="pick-info">
             <table>
@@ -92,7 +92,7 @@
             </table>
         </div>
         <div id="sun-sign-container">
-            <img id="sun-sign-image" src="https://url/{{ sun_sign }}.png" alt="Sun Sign Image">
+            <img id="sun-sign-image" src="/static/{{ sun_sign }}.png" alt="Sun Sign Image">
         </div>
     </div>
 
@@ -117,7 +117,7 @@
                     document.getElementById('avatar_id').textContent = data.avatar_id;
 
                     // Update the player image URL
-                    document.getElementById('player-image').src = `https://url/${data.player_id}.jpg`;
+                    document.getElementById('player-image').src = `https://sleepercdn.com/content/nfl/players/${data.player_id}.jpg`;
 
                     // Update the sun sign image URL
                     document.getElementById('sun-sign-image').src = `/static/${data.sun_sign}.png`;
