@@ -92,7 +92,7 @@
             </table>
         </div>
         <div id="sun-sign-container">
-            <img id="sun-sign-image" src="/static/{{ sun_sign }}.png" alt="Sun Sign Image">
+            <span id="sun-sign-emoji"></span>
         </div>
     </div>
 
@@ -120,8 +120,8 @@
                     document.getElementById('player-image').src = `https://sleepercdn.com/content/nfl/players/${data.player_id}.jpg`;
 
                     // Update the sun sign image URL
-                    document.getElementById('sun-sign-image').src = `/static/${data.sun_sign}.png`;
-
+                    document.getElementById('sun-sign-emoji').textContent = data.sun_sign_emoji;
+                    
                     // Update the background color based on sun_element
                     document.body.style.backgroundColor = getBackgroundColor(data.sun_element);
                 });
