@@ -1,4 +1,4 @@
-import pandas as pd
+import csv
 from flask import Flask, render_template, jsonify
 from sleeperpy import User
 from sleeperpy import Drafts
@@ -14,10 +14,18 @@ draft_id = 1120557302983110657
 #draft_id = x
 
 csv_file = "astro_df.csv"
-def get_csv_data(player_id):
-    df = pd.read_csv(csv_file)
-    return df[df["sleeper_id"] == int(player_id)][['sun.sign','sun.emoji','sun.element','chart']]
 
+def read_csv(csv_file):
+    with open(csv_file, 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
+        data = [row for row in reader]
+    return data
+
+def join_data(sleeper_data, csv_data, player_id):
+    for row in csv_data:
+        if row['sleeper_id'] == player_id:
+            return {**sleeper_data, **row}
+    return None
 
 @app.route('/')
 def index():
@@ -44,7 +52,7 @@ def get_recent_pick():
         else: #if the user doesn't exist, just for testing league drafts with bots
             owner_name = 'null'
             avatar_id = 'null'
-        csv_data = get_csv_data(player_id)
+        csv_data = join_data(player_id)
         if csv_data:
             sun_sign = csv_data['sun.sign']
             sun_element = csv_data['sun.element']
