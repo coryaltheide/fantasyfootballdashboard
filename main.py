@@ -48,6 +48,7 @@ def get_recent_pick():
         if csv_data:
             sun_sign = csv_data['sun.sign']
             sun_element = csv_data['sun.element']
+            sun_sign_emoji = csv_data['sun.emoji']
             chart = csv_data['chart']
         else:
             sun_sign = 'null'
@@ -69,7 +70,8 @@ def get_recent_pick():
         'player_id': player_id,
         'sun_sign': sun_sign,
         'sun_element': sun_element,
-        'chart: chart
+        'sun_sign_emoji': sun_emoji,
+        'chart': chart
     })
 
 if __name__ == '__main__':
