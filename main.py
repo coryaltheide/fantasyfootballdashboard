@@ -16,7 +16,7 @@ draft_id = 1120557302983110657
 csv_file = "astro_df.csv"
 def get_csv_data(player_id):
     df = pd.read_csv(csv_file)
-    return df[df["sleeper_id"] == player_id][["a", "b", "c", "d", "x", "y", "z"]]
+    return df[df["sleeper_id"] == int(player_id)][['sun.sign','sun.emoji','sun.element','chart']]
 
 
 @app.route('/')
@@ -53,6 +53,7 @@ def get_recent_pick():
         else:
             sun_sign = 'null'
             sun_element = 'null'
+            sun_sign_emoji = 'null'
             chart = 'null'
         
     else:
